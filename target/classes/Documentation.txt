@@ -1,0 +1,18 @@
+there is in memory db (H2) and RESTful service is developed using Spring boot
+POSTMAN is needed to test app
+Java 8
+Endpoint:
+1. POST -> http://localhost:8080/addTransactionRecord
+Body :
+{
+"payer": "DANNON",
+"points": 1000,
+"timestamp": "2020-11-02T14:00:00"
+}
+
+2. PUT -> http://localhost:8080/spendpoints
+Body:
+{
+"points": 5000
+}
+3. GET -> http://localhost:8080/pointsbalance
