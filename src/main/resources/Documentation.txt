@@ -1,6 +1,25 @@
 there is in memory db (H2) and RESTful service is developed using Spring boot
+Pre-requite-site
 POSTMAN is needed to test app
 Java 8
+IntelliJ
+Maven
+
+DB Url : http://localhost:8080/h2-console/login.jsp 
+Username : sa
+There is no password
+
+Refer configuration file : resources/application.properties
+
+Launch IntelliJ
+Open project in IntelliJ
+Build project using maven
+Run as application RewardPointsApplication
+
+File resources/data.sql contains ddl insert
+
+Use postman to to browse mainly below url 2 and 3
+
 Endpoint:
 1. POST -> http://localhost:8080/addTransactionRecord
 Body :
