@@ -49,3 +49,6 @@ swagger-ui documentation
 java configuration required to enable swagger
 
 to invoke swagger on running server : http://localhost:8080/swagger-ui/index.html
+
+<img width="1583" alt="image" src="https://user-images.githubusercontent.com/24884750/197445071-85c3a9a9-f4b3-4d94-90f5-68511eed3589.png">
+
