@@ -19,8 +19,6 @@ Run as application RewardPointsApplication
 
 File resources/data.sql contains ddl to insert
 
-Use postman to browse mainly below url 2 and 3
-
 Endpoint:
 1. get -> http://localhost:8080/1001/rewards
 no body in json required
@@ -51,4 +49,12 @@ java configuration required to enable swagger
 to invoke swagger on running server : http://localhost:8080/swagger-ui/index.html
 
 <img width="1583" alt="image" src="https://user-images.githubusercontent.com/24884750/197445071-85c3a9a9-f4b3-4d94-90f5-68511eed3589.png">
+
+<img width="523" alt="image" src="https://user-images.githubusercontent.com/24884750/197445173-94da98ac-3d2e-4552-b029-b43dac522523.png">
+
+<img width="497" alt="image" src="https://user-images.githubusercontent.com/24884750/197445293-bed0a64c-96d0-495c-ba52-e80e49cd7189.png">
+
+<img width="1683" alt="image" src="https://user-images.githubusercontent.com/24884750/197445411-b64ad5f4-0218-4d88-bdde-3a1a0a174bd4.png">
+
+
 
