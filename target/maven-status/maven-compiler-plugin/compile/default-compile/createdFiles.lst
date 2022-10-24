@@ -1,14 +1,2 @@
-com/mushtaq/reward/point/entity/TransactionRecordEntity.class
-com/mushtaq/reward/point/model/response/PointBalanceResponseModel.class
 com/mushtaq/reward/point/controller/RewardPointController.class
-com/mushtaq/reward/point/repository/TransactionRecordRepository.class
-com/mushtaq/reward/point/model/request/SpendPointRequestModel.class
-com/mushtaq/reward/point/service/impl/TransactionRecordServiceImpl.class
-com/mushtaq/reward/point/dto/TransactionRecordDto.class
-com/mushtaq/reward/point/model/response/SpendPointResponseModel.class
-com/mushtaq/reward/point/dto/PointBalance.class
-com/mushtaq/reward/point/service/TransactionRecordService.class
 com/mushtaq/reward/point/RewardPointsApplication.class
-com/mushtaq/reward/point/model/response/TransactionRecordResponseModel.class
-com/mushtaq/reward/point/dto/SpendPointDto.class
-com/mushtaq/reward/point/model/request/TransactionRecordRequestModel.class

@@ -1,80 +1,59 @@
 package com.mushtaq.reward.point.controller;
 
-import java.util.ConcurrentModificationException;
-import java.util.List;
-import java.util.Map;
-
 import com.mushtaq.reward.point.custom.exception.BusinessException;
 import com.mushtaq.reward.point.custom.exception.ControllerException;
+import com.mushtaq.reward.point.custom.exception.EmptyInputException;
+import com.mushtaq.reward.point.entity.Customer;
+import com.mushtaq.reward.point.model.response.Rewards;
+import com.mushtaq.reward.point.service.CustomerService;
+import com.mushtaq.reward.point.service.RewardsService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mushtaq.reward.point.dto.SpendPointDto;
-import com.mushtaq.reward.point.dto.TransactionRecordDto;
-import com.mushtaq.reward.point.model.request.SpendPointRequestModel;
-import com.mushtaq.reward.point.model.request.TransactionRecordRequestModel;
-import com.mushtaq.reward.point.model.response.SpendPointResponseModel;
-import com.mushtaq.reward.point.model.response.TransactionRecordResponseModel;
-import com.mushtaq.reward.point.service.TransactionRecordService;
-
+/**
+ * this endpoints give all 3 years rewards for customer or endpoint health
+ */
 @RestController
+@Tag(name="reward points application")
 public class RewardPointController {
-	
-	@Autowired
-	TransactionRecordService transactionRecordService;
-	
+
 	@Autowired
 	ModelMapper modelMapper;
+	@Autowired
+	CustomerService customerService;
+	@Autowired
+	RewardsService rewardsService;
+
 	
 	@RequestMapping(value="healthCheck")
 	public String healthCheck() {
 		return "Reward Point Controller Working Fine...!!!";
 	}
-	
-	@RequestMapping(value="addTransactionRecord", method=RequestMethod.POST)
-	public ResponseEntity<TransactionRecordResponseModel> addTransactionRecord(@RequestBody TransactionRecordRequestModel transactionRecordRequestModel) {
-		
-		TransactionRecordDto transactionRecordDto = modelMapper.map(transactionRecordRequestModel, TransactionRecordDto.class);
-		
-		TransactionRecordResponseModel transactionRecordResponseModel = transactionRecordService.addTransactionRecord(transactionRecordDto);
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(transactionRecordResponseModel);
-	}
-	
-	@RequestMapping(value="spendpoints", method=RequestMethod.PUT)
-	public ResponseEntity<?> spendpoint(@RequestBody SpendPointRequestModel spendPointRequestModel) {
+
+	/**
+	 * this endpoint gives all 3 years rewards for customer
+	 */
+	@GetMapping("{customerId}/rewards")
+	public ResponseEntity<?> getRewardsByCustomerId( @PathVariable Long customerId) {
+		//check for invalid customerId as 0
+		if(customerId.longValue()==0l) {
+			throw new EmptyInputException("610","Input field is 0 pls provide any value greater than 0");
+		}
 		try {
-			SpendPointDto spendPointDto = modelMapper.map(spendPointRequestModel, SpendPointDto.class);
-
-			List<SpendPointResponseModel> spendPointResponseModelList = transactionRecordService.spendpoint(spendPointDto);
-
-			return ResponseEntity.status(HttpStatus.OK).body(spendPointResponseModelList);
+			Customer customer = customerService.findByCustomerId(customerId);
+			Rewards customerRewards = rewardsService.getRewardsByCustomerId(customerId);
+			return new ResponseEntity<Rewards>(customerRewards, HttpStatus.OK);
 		} catch(BusinessException be) {
-			ControllerException ce =  new ControllerException(be.getErrorCode() , be.getErrorMessage());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ce);
+			ControllerException ce = new ControllerException(be.getErrorCode(), be.getErrorMessage());
+			return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+		} catch(Exception e) {
+			ControllerException ce = new ControllerException("611","something wrong happen in controller");
+			return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
 		}
-	}
-	
-	@RequestMapping(value="pointsbalance", method=RequestMethod.GET,  produces="application/json")
-	public ResponseEntity<String> pointsBalance() {
-		
-		Map<String, Long> pointBalanceMap = transactionRecordService.pointsBalance();
-		ObjectMapper mapper = new ObjectMapper();
-		String pointBalance = "";
-		try {
-			pointBalance = mapper.writeValueAsString(pointBalanceMap);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return ResponseEntity.status(HttpStatus.OK).body(pointBalance);
 	}
 
 }
