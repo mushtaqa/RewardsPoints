@@ -29,7 +29,7 @@ for testing used docker desktop
 
 command will be executed from RewardsPoints folder
 
-docker for build image : docker build -f Dockerfile -t docker-reward-point-0.0.1 .
+docker for build image : docker build -t docker-reward-point-0.0.1 .
 
 to see all images in docker desktop not inside container : docker images
 
@@ -48,4 +48,4 @@ swagger-ui documentation
 
 java configuration required to enable swagger
 
-to invoke swagger on running server : http://localhost:8080/rewardPoints/swagger-ui/index.html
+to invoke swagger on running server : http://localhost:8080/swagger-ui/index.html
